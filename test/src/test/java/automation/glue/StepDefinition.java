@@ -44,7 +44,7 @@ public class StepDefinition {
     //Scenario 2 and 3
     @Then("^Field \"([^\"]*)\" shows Invalid Error")
     public void field_shows_invalid_error(String field){
-        Assert.assertEquals(400, response.getStatusCode());
+        Assert.assertEquals(401, response.getStatusCode());
     }
 
 

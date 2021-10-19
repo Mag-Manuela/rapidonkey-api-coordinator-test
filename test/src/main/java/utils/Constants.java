@@ -11,6 +11,6 @@ public class Constants {
     public static final String HEADER_NAME = "app-client";
     public static final String HEADER_VALUE = "DispatcherFE";
     public static final String GRANT_TYPE = "password";
-    public static final String PASSWORD = "Rodeapps123";
+    public static final String PASSWORD = "";
     public static final String USERNAME = "dragos.moldovan@rodeapps.com";
 }

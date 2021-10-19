@@ -12,7 +12,7 @@ Feature: Users with valid credentials log in to Dispatcher App
       | password |
 
   #Scenario 2 and 3
-  @invalidLogin
+  @badCredentials
   Scenario Outline: Errors when invalid field is wrong
     Given I land on Login Page
     When I click on Login
@@ -24,17 +24,11 @@ Feature: Users with valid credentials log in to Dispatcher App
 
 
 
-
-
-
-
-
   #Scenario 6
   @validLogin
   Scenario: Successful Login
     Given  I land on Login Page
     When I click on Login
     Then I am logged into the platform
-    And I am directed to the Dashboard page
 
 
