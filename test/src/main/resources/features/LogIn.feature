@@ -12,7 +12,7 @@ Feature: Users with valid credentials log in to Dispatcher App
       | password |
 
   #Scenario 2 and 3
-  @badCredentials
+  @invalidLogin
   Scenario Outline: Errors when invalid field is wrong
     Given I land on Login Page
     When I click on Login
@@ -22,7 +22,19 @@ Feature: Users with valid credentials log in to Dispatcher App
       | email    |
       | password |
 
+    #Scenario 4
+  @invalidLogin
+  Scenario: Errors when deactivated account/ email not registered in the platform
+    Given I land on Login Page
+    When I click on Login
+    Then There is no dispatcher account for this email address Error is displayed
 
+  #Scenario 5
+  @activate
+  Scenario:
+    Given I land on Login Page
+    When I click on Login
+    Then My account status is changed to active
 
   #Scenario 6
   @validLogin
@@ -30,5 +42,18 @@ Feature: Users with valid credentials log in to Dispatcher App
     Given  I land on Login Page
     When I click on Login
     Then I am logged into the platform
+
+    #Scenario 7
+  @forgotPassword
+  Scenario: Forgot Password
+    Given  I land on Login Page
+    When I click Forgot Password
+    Then I should start the Forgot Password funnel
+
+#    #Scenario 8
+#  Scenario: Refresh page after value input
+#    Given  I land on Login Page
+#    When I refresh page
+#    Then Email and password fields return to their default states
 
 

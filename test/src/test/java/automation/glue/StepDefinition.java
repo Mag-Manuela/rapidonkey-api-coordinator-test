@@ -6,12 +6,17 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.springframework.test.context.ContextConfiguration;
 import utils.Constants;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static utils.Constants.BASE_URL;
 
@@ -21,7 +26,10 @@ public class StepDefinition {
 
     RequestSpecification request;
     private  static  Response response;
+    private  RequestSpecification requestForgotPassword;
+
     private  static  String  jsonString;
+    private static String token;
 
     @Given("^I land on Login Page")
     public void i_land_on_login_page(){
@@ -33,23 +41,6 @@ public class StepDefinition {
                 .basic(Constants.BASIC_AUTH_USERNAME, Constants.BASIC_AUTH_PASSWORD);
     }
 
-    //Scenario 1
-
-    @Then("^Field \"([^\"]*)\" shows Empty Error")
-    public void field_shows_empty_error(String field){
-        Assert.assertEquals(true, response.body().prettyPrint().contains("Bad credentials"));
-    }
-
-
-    //Scenario 2 and 3
-    @Then("^Field \"([^\"]*)\" shows Invalid Error")
-    public void field_shows_invalid_error(String field){
-        Assert.assertEquals(401, response.getStatusCode());
-    }
-
-
-
-
     //provide data
     @When("^I click on Login")
     public void i_click_on_login(){
@@ -60,7 +51,39 @@ public class StepDefinition {
                 body(body).
                 post("/general/v1/oauth/token");
 
+        token = Arrays.asList(response.asPrettyString().split("\"")).get(3);
+        System.out.println(token);
     }
+
+    //Scenario 1
+
+    @Then("^Field \"([^\"]*)\" shows Empty Error")
+    public void field_shows_empty_error(String field){
+        Assert.assertEquals(401, response.getStatusCode());
+    }
+
+
+    //Scenario 2 and 3
+    @Then("^Field \"([^\"]*)\" shows Invalid Error")
+    public void field_shows_invalid_error(String field){
+        Assert.assertEquals(401, response.getStatusCode());
+    }
+
+    //Scenario 4
+    @Then("^There is no dispatcher account for this email address Error is displayed")
+    public void there_is_no_dispatcher_for_this_email_address_error_is_displayed(){
+        Assert.assertEquals(true, response.body().prettyPrint().contains("There is no dispatcher account for this email address"));
+    }
+
+    //Scenario 5
+    @Then("^My account status is changed to active")
+    public void my_account_status_is_changed_to_active(){
+        response = request.auth().oauth2(token).patch("/dispatcher/v1/environments/" + Constants.ENVIRONMENT_ID_FOR_ACTIVATING_ACCOUNT + "/bo-users/"+ Constants.BOUSER_ID_FOR_ACTIVATING_ACCOUNT + "/activate");
+        jsonString = response.asPrettyString();
+        Assert.assertEquals(true, jsonString.contains("\"status\": \"ACTIVE\""));
+    }
+
+    //Scenario 6
 
     //CHECK STATUS 200 <=> OK -> USER LOGGED
     @Then("^I am logged into the platform")
@@ -75,7 +98,24 @@ public class StepDefinition {
 //        System.out.println(jsonString);
 //    }
 
+    //Scenario 7
+    @When("^I click Forgot Password")
+    public void i_click_forgot_password(){
+        RestAssured.baseURI  =  BASE_URL;
+        String body = String.format("\"email\"" + Constants.EMAIL);
+        requestForgotPassword  =  RestAssured.given();
+        System.out.println(Constants.HEADER_VALUE);
+        requestForgotPassword.header(Constants.HEADER_NAME, Constants.HEADER_VALUE).contentType(ContentType.JSON);
+        response = requestForgotPassword.body(body).
+                post("/general/v1/oauth/forgot-password");
+        System.out.println(response.getHeader("app-client"));
+    }
 
+    @Then("^I should start the Forgot Password funnel")
+    public void i_should_start_the_forgot_password_funnel(){
+        System.out.println(response.body().prettyPrint());
+        Assert.assertEquals(true, response.body().prettyPrint().contains("\"message\": \"Successfully sent email to update password\""));
+    }
 
 
 

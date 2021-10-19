@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/main/resources/features",
         glue = "automation/glue/",
-        tags= "@badCredentials",    // based on tags scenarios will run
+        tags= "@forgotPassword",    // based on tags scenarios will run
         monochrome=true, dryRun=false
 )
 public class LoginTests {
