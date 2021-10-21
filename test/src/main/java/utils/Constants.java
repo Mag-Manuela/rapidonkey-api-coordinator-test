@@ -11,9 +11,17 @@ public class Constants {
     public static final String HEADER_NAME = "app-client";
     public static final String HEADER_VALUE = "DispatcherFE";
     public static final String GRANT_TYPE = "password";
-    public static final String PASSWORD = "Rodeapps1234";
-    public static final String USERNAME = "dragos.moldovan@rodeapps.com";
+    public static final String PASSWORD = "Rodeapps123";
+    public static final String USERNAME = "dragos.moldova@rodeapps.com";
+
     public static final int ENVIRONMENT_ID_FOR_ACTIVATING_ACCOUNT = 1;
     public static final int BOUSER_ID_FOR_ACTIVATING_ACCOUNT = 10;
     public static final String EMAIL = "tudor.covaci@rodeapps.com";
+    public static final int RESET_OLD_PASSWORD = 0;
+    public static final int RESET_NEW_PASSWORD = 0;
+    public static final int RESET_CONFIRMATION_PASSWORD = 0;
+
+    public static final int SCREENSHOT_NAME_LENGTH = 4;
+    public static final String SCREENSHOT_EXTENSION = ".png";
+    public static final String SCREENSHOTS_FOLDER = "/Users/manuelamag/Downloads/rapidonkey-api-coordinator-test/screenshots";
 }

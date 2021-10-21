@@ -1,7 +1,7 @@
 Feature: Users with valid credentials log in to Dispatcher App
 
   #Scenario 1
-  @invalidLogin
+  @empty
   Scenario Outline: Errors when any of the fields is empty
     Given I land on Login Page
     When I click on Login
@@ -23,7 +23,7 @@ Feature: Users with valid credentials log in to Dispatcher App
       | password |
 
     #Scenario 4
-  @invalidLogin
+  @noAccount
   Scenario: Errors when deactivated account/ email not registered in the platform
     Given I land on Login Page
     When I click on Login
@@ -44,11 +44,11 @@ Feature: Users with valid credentials log in to Dispatcher App
     Then I am logged into the platform
 
     #Scenario 7
-  @forgotPassword
-  Scenario: Forgot Password
-    Given  I land on Login Page
-    When I click Forgot Password
-    Then I should start the Forgot Password funnel
+#  @forgotPassword
+#  Scenario: Forgot Password
+#    Given  I land on Login Page
+#    When I click Forgot Password
+#    Then I should start the Forgot Password funnel
 
 #    #Scenario 8
 #  Scenario: Refresh page after value input
